@@ -1,3 +1,4 @@
+// Array of image paths for the memory game cards
 const images = [
     "images/bounty.png",
     "images/daim.png",
@@ -13,25 +14,37 @@ const images = [
     "images/snickers.png"
 ];
 
+// Event listeners for various buttons using querySelector
+document.querySelector('#playerVsPlayerBtn').addEventListener('click', selectPlayerVsPlayer);
+document.querySelector('#playerVsAIBtn').addEventListener('click', selectPlayerVsAI);
+document.querySelector('#startBtn').addEventListener('click', startGame);
+document.querySelector('#resetBtn').addEventListener('click', resetGame);
+document.querySelector('#returnToMenuBtn').addEventListener('click', returnToStart);
+document.querySelector('#resetHighScoreBtn').addEventListener('click', resetHighScore);
+
 // Duplicate the images array to create pairs
 const imagesPairs = [...images, ...images];
 
-const gameBoard = document.getElementById('game-board');
+// DOM elements and variables for game state
+const gameBoard = document.querySelector('#game-board');
 let cards = [];
 let flippedCards = [];
 let matchedCards = [];
 let currentplayer = 1;
 let player1Pairs = 0;
 let player2Pairs = 0;
-const score1 = document.getElementById('score1');
-const score2 = document.getElementById('score2');
- 
+const score1 = document.querySelector('#score1');
+const score2 = document.querySelector('#score2');
+
+// Function to start the game
 function startGame() {
     resetGame();
     createBoard();
 }
 
+// Function to reset the game state
 function resetGame() {
+    // Reset various game-related variables and elements
     flippedCards = [];
     matchedCards = [];
     currentplayer = 1;
@@ -41,18 +54,17 @@ function resetGame() {
     score2.textContent = "0";
     clearBoard();
 
-     // Show the "Start Game" button after resetting the game
-    startBtn.style.display = 'inline-block';
-    currentPlayerTurn.style.display = 'none';
-    currentPlayerElement.style.display = 'none';
-    player1.style.display = 'none';
-    player2.style.display = 'none';
+    // Show or hide various elements after resetting the game
+    document.querySelector('#startBtn').style.display = 'inline-block';
+    document.querySelector('#currentPlayerTurn').style.display = 'none';
+    document.querySelector('#currentPlayer').style.display = 'none';
+    document.querySelector('#player1').style.display = 'none';
+    document.querySelector('#player2').style.display = 'none';
     document.querySelector('.scoreboard').style.display = 'none';
-    resetBtn.style.display = 'none';
-    
-    
+    document.querySelector('#resetBtn').style.display = 'none';
 }
 
+// Function to create the game board
 function createBoard() {
     shuffleCards();
     for (let i = 0; i < 24; i++) {
@@ -68,15 +80,14 @@ function createBoard() {
     allowNextFlip(); // Enable click event for the initial state of the board
 
     // Call makeAIMove if the selected mode is 'ai'
-    if (document.getElementById('mode').value === 'ai') {
+    if (document.querySelector('#mode').value === 'ai') {
         setTimeout(() => {
             makeAIMove();
         }, 0);
     }
 }
 
-
-
+// Function to shuffle the cards
 function shuffleCards() {
     for (let i = cards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -86,18 +97,16 @@ function shuffleCards() {
     }
 }
 
+// Function to clear the game board
 function clearBoard() {
     gameBoard.innerHTML = "";
     cards = [];
 }
 
-
-
-
-
+// Function to handle card flipping
 function flipCard() {
     if (flippedCards.length < 2 && !matchedCards.includes(this)) {
-        this.style.backgroundImage = 'url(' + this.dataset.image +')';
+        this.style.backgroundImage = 'url(' + this.dataset.image + ')';
         flippedCards.push(this);
         this.classList.add('player' + currentplayer);
         this.style.backgroundSize = 'cover';
@@ -109,8 +118,7 @@ function flipCard() {
     }
 }
 
-
-
+// Function to check for a match
 function checkMatch() {
     if (flippedCards.length === 2) {
         const [card1, card2] = flippedCards;
@@ -157,15 +165,13 @@ function checkMatch() {
     }
 }
 
-
-
+// Function to allow the next card flip
 function allowNextFlip() {
     // Enable click event for all cards
     cards.forEach(card => card.addEventListener("click", flipCard));
 }
 
-
-
+// Function to update the player score
 function updateScore() {
     if (currentplayer === 1) {
         player1Pairs++;
@@ -176,61 +182,58 @@ function updateScore() {
     }
 }
 
+// Function to check if a player has won
 function checkWin() {
     if (matchedCards.length === cards.length) {
         alert("Game Over! Player " + ((player1Pairs > player2Pairs) ? 1 : 2) + " wins!");
-        updateHighScore();  // Update high score when a player wins
+        updateHighScore(); // Update high score when a player wins
         resetGame();
     }
 }
 
+// Function to switch the turn between players
 function switchTurn() {
     currentplayer = (currentplayer === 1) ? 2 : 1;
-    
+
     // Update the current player's turn display
-    document.getElementById('currentPlayer').textContent = (currentplayer === 1) ? player1Name : player2Name;
-    console.log('Current player turn updated:', document.getElementById('currentPlayer').textContent);
+    document.querySelector('#currentPlayer').textContent = (currentplayer === 1) ? player1Name : player2Name;
 
-
-     if (currentplayer === 2 && document.getElementById('mode').value === 'ai') {
+    if (currentplayer === 2 && document.querySelector('#mode').value === 'ai') {
         // It's the AI's turn, make the move after a short delay
         setTimeout(makeAIMove, 1000);
     }
-
 }
 
-// Add a new function to update the current player's turn display
+// Function to update the current player's turn display
 function updateCurrentPlayerTurn() {
-    currentPlayerElement.textContent = 'Player ' + currentplayer;
+    document.querySelector('#currentPlayerElement').textContent = 'Player ' + currentplayer;
 }
 
-const menuButtons = document.getElementById('menuButtons');
-const playerNamesContainer = document.getElementById('playerNames');
-const aiDifficultyContainer = document.getElementById('aiDifficulty');
-const startBtn = document.getElementById('startBtn');
-const resetBtn = document.getElementById('resetBtn');
-const player1 = document.getElementById('player1');
-const player2 = document.getElementById('player2');
-const scoreElement1 = document.getElementById('score1');
-const scoreElement2 = document.getElementById('score2');
-const currentPlayerTurn = document.getElementById('currentPlayerTurn');
-const currentPlayerElement = document.getElementById('currentPlayer');
+// DOM elements for menu-related buttons and containers
+const menuButtons = document.querySelector('#menuButtons');
+const playerNamesContainer = document.querySelector('#playerNames');
+const aiDifficultyContainer = document.querySelector('#aiDifficulty');
+const startBtn = document.querySelector('#startBtn');
+const resetBtn = document.querySelector('#resetBtn');
+const player1 = document.querySelector('#player1');
+const player2 = document.querySelector('#player2');
+const scoreElement1 = document.querySelector('#score1');
+const scoreElement2 = document.querySelector('#score2');
+const currentPlayerTurn = document.querySelector('#currentPlayerTurn');
+const currentPlayerElement = document.querySelector('#currentPlayer');
 let selectedMode = 'player'; // Default value, you can adjust as needed
 // Declare currentPlayerName with a default value at the beginning of your script
 let currentPlayerName = 'Player 1'; // Adjust the default value as needed
 
-const returnToMenuBtn = document.getElementById('returnToMenuBtn');
+// DOM element for the "Return to Menu" button
+const returnToMenuBtn = document.querySelector('#returnToMenuBtn');
 
-
-
+// Player names and default values
 let player1Name = '';
 let player2Name = '';
 
-
-
+// Function to select the player vs player mode
 function selectPlayerVsPlayer() {
-    
-    console.log('Player vs Player selected');
     menuButtons.style.display = 'none';
     playerNamesContainer.style.display = 'flex';
     aiDifficultyContainer.style.display = 'none';
@@ -240,15 +243,10 @@ function selectPlayerVsPlayer() {
     player2.style.display = 'none';
     currentPlayerTurn.style.display = 'none';
     currentPlayerElement.style.display = 'none';
-    
-   
-    
 }
 
-
-
+// Function to select the player vs AI mode
 function selectPlayerVsAI() {
-    console.log('Player vs AI selected');
     selectedMode = 'ai'; // Declare and assign a value to selectedMode
     menuButtons.style.display = 'none';
     playerNamesContainer.style.display = 'none';
@@ -257,39 +255,18 @@ function selectPlayerVsAI() {
     resetBtn.style.display = 'none';
     player1.style.display = 'none';
     player2.style.display = 'none';
-    
-
-
-  
 }
 
-// Helper function to get n random indices from an array
-function getRandomIndices(array, n) {
-    const shuffledArray = array.slice().sort(() => Math.random() - 0.5);
-    return shuffledArray.slice(0, n).map(item => array.indexOf(item));
-}
-
-
-
-
-
-
+// Function for the AI to make a move
 function makeAIMove() {
-    console.log('AI is making a move');
     const unflippedCards = cards.filter(card => !card.classList.contains('flipped'));
-
-    console.log('Unflipped cards length:', unflippedCards.length);
 
     if (unflippedCards.length >= 2) {
         const randomIndices = getRandomIndices(unflippedCards, 2);
         const aiCards = [unflippedCards[randomIndices[0]], unflippedCards[randomIndices[1]]];
 
-        console.log('AI chose cards:', aiCards);
-
         for (const aiCard of aiCards) {
-            console.log('Before AI card click');
             aiCard.click(); // Simulate a click on the AI's chosen cards
-            console.log('After AI card click');
         }
 
         setTimeout(checkMatch, 500); // Check for a match after the AI move is completed
@@ -304,62 +281,51 @@ function getRandomIndices(array, n) {
     return shuffledArray.slice(0, n).map(item => array.indexOf(item));
 }
 
-
-
-
-
-
-
-
+// Function to start the game
 function startGame() {
-    console.log('Start game called');
-
+    // Set player names based on user input or default values
     if (selectedMode === 'player') {
-        player1Name = document.getElementById('player1Name').value || 'Player 1';
-        player2Name = document.getElementById('player2Name').value || 'Player 2';
+        player1Name = document.querySelector('#player1Name').value || 'Player 1';
+        player2Name = document.querySelector('#player2Name').value || 'Player 2';
     } else if (selectedMode === 'ai') {
-        console.log('AI mode selected');
         player1Name = 'Player';
         player2Name = 'AI';
-        document.getElementById('player2').style.display = 'none'; // Hide player 2 in AI mode
-        document.getElementById('score2').style.display = 'none'; // Hide player 2's score in AI mode
+        document.querySelector('#player2').style.display = 'none'; // Hide player 2 in AI mode
+        document.querySelector('#score2').style.display = 'none'; // Hide player 2's score in AI mode
     }
 
-    currentPlayerName = player1Name; // Set the current player to player 1
-    console.log('Current player turn:', currentPlayerName);
-    document.getElementById('currentPlayer').textContent = currentPlayerName;
+    // Set the current player to player 1
+    currentPlayerName = player1Name;
+    document.querySelector('#currentPlayer').textContent = currentPlayerName;
 
-    console.log('Player 1 Name:', player1Name);
-    console.log('Player 2 Name:', player2Name);
-
-    document.getElementById('playerNames').style.display = 'none';
-
+    // Reset various game-related elements and start the game
+    document.querySelector('#playerNames').style.display = 'none';
     resetGame();
     createBoard();
 
+    // Get and display the initial high score from local storage
     let highScore = localStorage.getItem('highScore') || 0;
 
-    startBtn.style.display = 'none';
-    resetBtn.style.display = 'inline-block';
-    player1.style.display = 'inline-block';
-    player2.style.display = 'inline-block';
+    document.querySelector('#startBtn').style.display = 'none';
+    document.querySelector('#resetBtn').style.display = 'inline-block';
+    document.querySelector('#player1').style.display = 'inline-block';
+    document.querySelector('#player2').style.display = 'inline-block';
 
-    player1.querySelector('h2').textContent = player1Name;
-    player2.querySelector('h2').textContent = player2Name;
+    // Set player names for display
+    document.querySelector('#player1 h2').textContent = player1Name;
+    document.querySelector('#player2 h2').textContent = player2Name;
 
     scoreElement1.textContent = "0";
     scoreElement2.textContent = "0";
 
     currentPlayerTurn.style.display = 'flex';
-    document.getElementById('returnToMenuBtn').style.display = 'inline-block';
+    document.querySelector('#returnToMenuBtn').style.display = 'inline-block';
 
-    console.log('Current player turn after creating board:', currentPlayerName);
-
+    // Display the high score in the scoreboard
     document.querySelector('.scoreboard').style.display = 'flex';
 
     // If the selected mode is 'ai', let the AI take the first turn
     if (selectedMode === 'ai') {
-        console.log('AI mode selected, calling makeAIMove');
         makeAIMove();
     }
 }
@@ -367,13 +333,7 @@ function startGame() {
 
 
 
-
-    
-    
-
-
-
-// Add a new function to handle the "Return to Menu" button
+// Function to handle the "Return to Menu" button
 function returnToStart() {
     console.log('Returning to start...');
 
@@ -387,51 +347,28 @@ function returnToStart() {
     score2.textContent = "0";
 
     clearBoard();
-    
 
     // Reset game-related elements
-    document.getElementById('resetBtn').style.display = 'none';
-    document.getElementById('player1').style.display = 'none';
-    document.getElementById('player2').style.display = 'none';
+    document.querySelector('#resetBtn').style.display = 'none';
+    document.querySelector('#player1').style.display = 'none';
+    document.querySelector('#player2').style.display = 'none';
     document.querySelector('.scoreboard').style.display = 'none';
 
     // Hide the "Return to Menu" button
-    document.getElementById('returnToMenuBtn').style.display = 'none';
+    document.querySelector('#returnToMenuBtn').style.display = 'none';
 
     // Reset the game mode to its default value or the desired value
     selectedMode = 'player'; // Set it to an empty string or 'player', depending on your default mode
 
     // Hide the current turn display
-    document.getElementById('currentPlayerTurn').style.display = 'none';
-
+    document.querySelector('#currentPlayerTurn').style.display = 'none';
 
     // Show menu-related elements
-    document.getElementById('menuButtons').style.display = 'flex';
-    document.getElementById('playerNames').style.display = 'none';
-    document.getElementById('aiDifficulty').style.display = 'none';
-    document.getElementById('startBtn').style.display = 'none';
-
-    // Add event listeners for menu buttons
-   
-    document.getElementById('returnToMenuBtn').addEventListener('click', returnToStart);
-     document.getElementById('playerVsAIBtn').addEventListener('click', selectPlayerVsAI);
-    document.getElementById('playerVsPlayerBtn').addEventListener('click', selectPlayerVsPlayer);
-
-    // Hide the scoreboard and gameboard when returning to start
-    document.getElementById('game-board').style.display = 'none';
-    document.querySelector('.scoreboard').style.display = 'none';
-
-    
-
-     
+    document.querySelector('#menuButtons').style.display = 'flex';
+    document.querySelector('#playerNames').style.display = 'none';
+    document.querySelector('#aiDifficulty').style.display = 'none';
+    document.querySelector('#startBtn').style.display = 'none';
 }
-
-
-
-
-
-
-
 
 // Initialize high score from localStorage or set to 0
 let highScore = localStorage.getItem('highScore') || 0;
@@ -440,6 +377,7 @@ console.log('Initial High Score:', highScore);
 // Call this after updating the high score
 displayHighScore();
 
+// Function to update the high score
 function updateHighScore() {
     const winningPlayerScore = (player1Pairs > player2Pairs) ? player1Pairs : player2Pairs;
 
@@ -453,12 +391,14 @@ function updateHighScore() {
     }
 }
 
+// Function to display the high score
 function displayHighScore() {
     console.log('High Score:', highScore);
     document.getElementById('currentHighScore').textContent = highScore;
     // Add code to display high score in your UI
 }
 
+// Function to clear the high score
 function clearHighScore() {
     highScore = 0;
     localStorage.removeItem('highScore');
@@ -468,6 +408,7 @@ function clearHighScore() {
     displayHighScore();
 }
 
+// Function to reset the high score
 function resetHighScore() {
     // Reset the high score in localStorage to 0
     highScore = 0;
@@ -476,23 +417,9 @@ function resetHighScore() {
     // Update the displayed high score
     displayHighScore();
 }
-
-
 
 // Add an event listener to the reset high score button
 const resetHighScoreBtn = document.getElementById('resetHighScoreBtn');
-
-// Add an event listener to the button
 resetHighScoreBtn.addEventListener('click', resetHighScore);
-
-// The resetHighScore function is already defined in your code
-function resetHighScore() {
-    // Reset the high score in localStorage to 0
-    highScore = 0;
-    localStorage.setItem('highScore', highScore);
-
-    // Update the displayed high score
-    displayHighScore();
-}
 
 

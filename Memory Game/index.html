@@ -10,27 +10,26 @@
 
 <body>
     <header>
-             <h1>Memory Game</h1>
-            <!-- ... other header content ... -->
+        <h1>Memory Game</h1>
+        <!-- Header content -->
 
-        
-
-
+        <!-- Menu buttons for selecting game mode -->
         <div id="menuButtons">
-            <button onclick="selectPlayerVsPlayer()">Player vs Player</button>
-            <button onclick="selectPlayerVsAI()">Player vs AI</button>
+            <button id="playerVsPlayerBtn">Player vs Player</button>
+            <button id="playerVsAIBtn">Player vs AI</button>
         </div>
-        
-    
 
-        <div id="playerNames" style="display: none;">
+        <!-- Player names input fields -->
+        <div id="playerNames" class="hidden">
             <label for="player1Name">Player 1 Name:</label>
             <input type="text" id="player1Name" placeholder="Enter Player 1's name">
             <br>
             <label for="player2Name">Player 2 Name:</label>
             <input type="text" id="player2Name" placeholder="Enter Player 2's name">
         </div>
-        <div id="aiDifficulty" style="display: none;">
+
+        <!-- AI difficulty selection -->
+        <div id="aiDifficulty" class="hidden">
             <label for="difficulty">Select AI Difficulty:</label>
             <select id="difficulty">
                 <option value="easy">Easy</option>
@@ -38,8 +37,8 @@
             </select>
         </div>
 
-        <!-- Add the game mode select element -->
-        <div id="gameMode" style="display: none;">
+        <!-- Game mode selection -->
+        <div id="gameMode" class="hidden">
             <label for="mode">Select Game Mode:</label>
             <select id="mode">
                 <option value="player">Player</option>
@@ -47,61 +46,50 @@
             </select>
         </div>
 
-      
-        
-       <!-- Add  display the high score -->
-       <p>Current High Score: <span id="currentHighScore">0</span></p>
+        <!-- Display the high score -->
+        <p>Current High Score: <span id="currentHighScore">0</span></p>
 
-        <!-- Add the current player turn elements -->
-        <p id="currentPlayerTurn" style="display: none;">Current Turn: <span id="currentPlayer"></span></p>
+        <!-- Display the current player turn -->
+        <p id="currentPlayerTurn" class="hidden">Current Turn: <span id="currentPlayer"></span></p>
 
         <div>
+            <!-- Display the high score -->
             <span id="highScore"></span>
-            <!-- Add a button to reset the high score -->
+
+            <!-- Button to reset the high score -->
             <button id="resetHighScoreBtn">Reset High Score</button>
         </div>
 
-
-        <button id="startBtn" onclick="startGame()" style="display: none;">Start Game</button>
-        <button id="resetBtn" onclick="resetGame()" style="display: none;">Reset Game</button>
-        <button id="returnToMenuBtn" onclick="returnToStart()" style="display: none;">Return to Menu</button>
+        <!-- Buttons for game control -->
+        <button id="startBtn" class="hidden">Start Game</button>
+        <button id="resetBtn" class="hidden">Reset Game</button>
+        <button id="returnToMenuBtn" class="hidden">Return to Menu</button>
     </header>
 
     <main>
-
-       
-
+        <!-- Game board container -->
         <div id="game-board"></div>
 
- 
-
-     <div class="scoreboard">
-
-        <div class="player" id="player1" style="display: none;">
-            <h2>Player 1</h2>
-            <p>Score: <span id="score1">0</span></p>
+        <!-- Scoreboard for players -->
+        <div class="scoreboard">
+            <div class="player" id="player1" class="hidden">
+                <h2>Player 1</h2>
+                <p>Score: <span id="score1">0</span></p>
+            </div>
+            <div class="player" id="player2" class="hidden">
+                <h2>Player 2</h2>
+                <p>Score: <span id="score2">0</span></p>
+            </div>
         </div>
-
-
-        
-        <div class="player" id="player2" style="display: none;">
-            <h2>Player 2</h2>
-            <p>Score: <span id="score2">0</span></p>
-        </div>
-
-       
-
-     </div>
-        
     </main>
 
-
-
-    <!-- Move the script tag to the end of the body -->
+    <!-- Script tag for the JavaScript file -->
     <script src="app.js" defer></script>
 </body>
 
 </html>
+
+
 
 
 
