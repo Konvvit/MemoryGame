@@ -291,7 +291,7 @@ function startGame() {
         player1Name = 'Player';
         player2Name = 'AI';
         document.querySelector('#player2').style.display = 'none'; // Hide player 2 in AI mode
-        document.querySelector('#score2').style.display = 'none'; // Hide player 2's score in AI mode
+        
     }
 
     // Set the current player to player 1
