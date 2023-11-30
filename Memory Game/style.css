@@ -1,0 +1,119 @@
+body {
+    background-color: #b69898;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+}
+
+header {
+    margin-top: 20px;
+    
+}
+
+button {
+    margin: 5px;
+    padding: 8px;
+    font-size: 16px;
+    
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    
+}
+
+.player {
+    margin: 10px;
+    padding: 50px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    
+}
+
+#game-board {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin-top: 20px;
+    
+}
+
+.card {
+    background-image: url("images/question.png");
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border: solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+    
+}
+
+
+/* Add these styles to your existing CSS or create a new style.css file */
+
+#menuButtons {
+    display: flex;
+    flex-direction: column;
+    /* Make buttons stack vertically */
+    align-items: center;
+    /* Center buttons horizontally */
+    
+}
+
+#playerNames,
+#aiDifficulty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    /* Add some margin for better spacing */
+}
+
+/* Rest of your existing CSS styles */
+
+#currentPlayerTurn {
+    display: block;
+    margin-top: 10px;
+    margin-left: 55px;
+    /* Add any other styles as needed */
+}
+
+#currentPlayer {
+    font-weight: bold;
+    display: block !important;
+    /* Add any other styles as needed */
+}
+
+.some-class {
+    display: none;
+    /* Will be overridden by the #currentPlayer styles */
+}
+
+.scoreboard {
+    display: none;
+    align-items: top;
+    margin-top: 15px;
+    width: 380px;
+    height: 250px;
+    border: solid black;
+    padding: 10px;
+    
+
+}
+
+
+
