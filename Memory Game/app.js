@@ -111,7 +111,6 @@ function flipCard() {
         this.classList.add('player' + currentplayer);
         this.style.backgroundSize = 'cover';
         this.classList.add('flipped'); // Add flipped class
-
         if (flippedCards.length === 2) {
             setTimeout(checkMatch, 1000);
         }
